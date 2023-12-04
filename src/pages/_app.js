@@ -6,7 +6,7 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { AuthConsumer, AuthProvider } from "src/contexts/auth-context";
 import { useNProgress } from "src/hooks/use-nprogress";
-import { createTheme } from "../theme/index";
+import { createTheme } from "src/theme/index";
 import { createEmotionCache } from "src/utils/create-emotion-cache";
 import "simplebar-react/dist/simplebar.min.css";
 
@@ -20,6 +20,8 @@ const SplashScreen = () => null;
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
+
+
   const theme = createTheme();
 
 

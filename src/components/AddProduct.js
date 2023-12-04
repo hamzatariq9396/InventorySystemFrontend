@@ -30,15 +30,15 @@ import { toast } from "react-toastify";
 import io from "socket.io-client"
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from './Loader';
-
+import { styled } from '@mui/system';
 const style ={
   container: {
-    marginTop: theme.spacing(4),
+    marginTop: '10px',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing(2),
+    gap:'5px',
   },
   formControl: {
     minWidth: 100,
@@ -76,7 +76,7 @@ const initialState = {
 const socket = io.connect("http://localhost:8080");
 const AddProductPage = () => {
 
-  const classes = useStyles();
+
   const [feildState, setFeildState] = useState(initialState)
   const [tableState, setTableState] = useState([])
   const [isEdit, setIsEdit] = useState(
@@ -296,7 +296,7 @@ setLoading(false)
 
       response.products.forEach((element, i) => {
         const prorataBadgeClass1 =
-          element.status === "active" ? classes.badgePlan : element.status === "disable" ? classes.badgeDanger : "";
+          element.status === "active" ? style.badgePlan : element.status === "disable" ? style.badgeDanger : "";
         data.push({
           SR: i + 1,
           id: element._id,
@@ -304,7 +304,7 @@ setLoading(false)
           col_price: element.price,
           col_description: element.description,
           col_category: element.category,
-          col_status: <div className={`${prorataBadgeClass1}`}>{element.status}</div>,
+          col_status: <div style={`${prorataBadgeClass1}`}>{element.status}</div>,
           col_image_url: <div style={{ width: '80px', height: '50px' }}>
             <img
               src={element.image_url}
@@ -453,7 +453,7 @@ if(loading){
             Enter the product Details
           </Typography>
 
-          <form className={classes.form} 
+          <form style={style.form} 
           onSubmit={isEdit.edit == true ? handleUpdateSubmit : handleSubmit}>
             <TextField
               label="Product Name"
@@ -472,7 +472,7 @@ if(loading){
               onChange={handleInputChange}
               required
             />
-            <FormControl className={classes.formControl}>
+            <FormControl style={style.formControl}>
               <InputLabel id="category-label">Category</InputLabel>
               <Select
                 labelId="category-label"
@@ -514,7 +514,7 @@ if(loading){
           </form>
 
         </div>
-        <Accordion className={classes.accordion}>
+        <Accordion style={style.accordion}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6" 
             align="center" gutterBottom>
