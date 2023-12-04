@@ -13,7 +13,7 @@ import {
   InputLabel,
   Card, CardContent
 } from '@mui/material';
-import { makeStyles } from '@material-ui/core/styles';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReactTable from './ReactTable';
 import { del, get, post, put } from 'src/api/routes';
@@ -31,7 +31,7 @@ import io from "socket.io-client"
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from './Loader';
 
-const useStyles = makeStyles((theme) => ({
+const style ={
   container: {
     marginTop: theme.spacing(4),
   },
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100px",
     padding: "5px 0",
   }
-}));
+};
 
 const initialState = {
   TITLE: "",
@@ -114,7 +114,7 @@ setLoading(true)
       status: "active"
     }
 
-    const result = await post("http://localhost:8080/api/v1/product/new", data)
+    const result = await post(`${process.env.BACKEND_URL}product/new`, data)
     if (result.status === 200) {
       data.actionType="Add"
       data.date= new Date()
@@ -206,7 +206,7 @@ setLoading(true)
       status: "active"
     }
  setLoading(true)
-    const result = await put(`http://localhost:8080/api/v1/product/${isEdit.ID}`, data)
+    const result = await put(`${process.env.BACKEND_URL}/product/${isEdit.ID}`, data)
 
     if (result.status === 200) {
       data.id=isEdit.ID
@@ -234,7 +234,7 @@ setLoading(true)
       status: "active"
     }
 setLoading(true)
-    const result = await put(`http://localhost:8080/api/v1/product/${id}`, data)
+    const result = await put(`${process.env.BACKEND_URL}/product/${id}`, data)
     if (result.status === 200) {
       data.id=id
       data.title=title
@@ -264,7 +264,7 @@ setLoading(false)
       status: "disable"
     }
 setLoading(true)
-    const result = await put(`http://localhost:8080/api/v1/product/${id}`, data)
+    const result = await put(`${process.env.BACKEND_URL}/product/${id}`, data)
     if (result.status === 200) {
       data.id=id
       data.title=title
@@ -290,7 +290,7 @@ setLoading(false)
   const prepareTableData = async () => {
 
     let response =
-      await get("http://localhost:8080/api/v1/products")
+      await get(`${process.env.BACKEND_URL}/products`)
     if (response.status == 200) {
       let data = [];
 
@@ -332,7 +332,9 @@ setLoading(false)
                     )
                   }
                 >
-                  <EditIcon fontSize="small" color='primary' style={{ fontSize: "18px" }} />
+                  <EditIcon fontSize="small" 
+                  color='primary'
+                   style={{ fontSize: "18px" }} />
 
                   {/* <i className="fa fa-edit"></i> */}
                   {/* <Image src={Edit}></Image> */}
@@ -395,7 +397,7 @@ setLoading(false)
   };
   const deleteProduct = async () => {
     setLoading(true)
-    const result = await del(`http://localhost:8080/api/v1/product/${deleteModal.ID}`)
+    const result = await del(`${process.env.BACKEND_URL}/product/${deleteModal.ID}`)
     if (result.status === 200) {
       let data={}
       data.id=deleteModal.ID,
@@ -418,7 +420,7 @@ setLoading(false)
  
 
   useEffect(() => {
-    const socket = io('http://localhost:8080'); // Replace with your server URL
+    const socket = io(`${process.env.BACKEND_URL_SOCKET}`); // Replace with your server URL
     dispatch({ type: "LOAD_SOCKET_SUCCESS", payload: socket });
     // Listen for socket events
     socket.on('getProducts', (updatedProducts) => {
@@ -444,11 +446,15 @@ if(loading){
       <div style={{ display: "flex", flexDirection: 'column', width: "80%" }}>
         <div style={{ marginBottom: "30px" }} >
 
-          <Typography variant="h4" align="center" gutterBottom>
+          <Typography 
+          variant="h4" 
+          align="center"
+           gutterBottom>
             Enter the product Details
           </Typography>
 
-          <form className={classes.form} onSubmit={isEdit.edit == true ? handleUpdateSubmit : handleSubmit}>
+          <form className={classes.form} 
+          onSubmit={isEdit.edit == true ? handleUpdateSubmit : handleSubmit}>
             <TextField
               label="Product Name"
               // variant="outlined"
@@ -500,7 +506,9 @@ if(loading){
               onChange={handleInputChange}
               required
             />
-            <Button type="submit" variant="contained" color="primary">
+            <Button type="submit"
+             variant="contained"
+              color="primary">
               {isEdit.edit === true ? "Update product" : "Add Product"}
             </Button>
           </form>
@@ -508,14 +516,16 @@ if(loading){
         </div>
         <Accordion className={classes.accordion}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6" align="center" gutterBottom>
+            <Typography variant="h6" 
+            align="center" gutterBottom>
               Tab To view The Details
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
 
             <div style={{ padding: '40px', background: '#ffff' }}>
-              <ReactTable columns={cols} data={tableState} />
+              <ReactTable columns={cols} 
+              data={tableState} />
             </div>
 
           </AccordionDetails>

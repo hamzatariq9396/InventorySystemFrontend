@@ -64,7 +64,9 @@ function ReactTable({
   };
 
   return (
-    <div className="react-table-container" style={{ margin: "20px 0" }}>
+    <div className="react-table-container" 
+    style={{ margin: "20px 0" }}
+    >
       {includeDownload && (
         <CSVLink
           data={formatDataForExport()}
@@ -76,8 +78,10 @@ function ReactTable({
           </Button>
         </CSVLink>
       )}
-      <div className="table-options" style={{ margin: "10px 0" }}>
-        <div className="show-entries" style={{ marginBottom: "10px" }}>
+      <div className="table-options"
+       style={{ margin: "10px 0" }}>
+        <div className="show-entries" 
+        style={{ marginBottom: "10px" }}>
           <span>Show Entries</span>
           <Select
             variant="outlined"
@@ -95,7 +99,8 @@ function ReactTable({
         </div>
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
-      <TableContainer className="custom-table-container" style={{ margin: "10px 0" }}>
+      <TableContainer className="custom-table-container"
+       style={{ margin: "10px 0" }}>
         <Table {...getTableProps()} >
           <TableHead style={{ backgroundColor: '#ffffff' }} >
             {headerGroups.map((headerGroup, i) => (
@@ -114,11 +119,13 @@ function ReactTable({
               </TableRow>
             ))}
           </TableHead>
-          <TableBody {...getTableBodyProps()}>
+          <TableBody
+           {...getTableBodyProps()}>
             {page.map((row, i) => {
               prepareRow(row);
               return (
-                <TableRow key={i} {...row.getRowProps()}>
+                <TableRow key={i}
+                 {...row.getRowProps()}>
                   {row.cells.map((cell, j) => (
                     <TableCell
                       key={j}
